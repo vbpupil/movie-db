@@ -2,10 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Actor;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin \App\Models\Actor */
+/** @mixin Actor */
 class ActorResource extends JsonResource
 {
     public function toArray(Request $request)
@@ -15,7 +16,7 @@ class ActorResource extends JsonResource
             'name' => $this->name,
             'age' => $this->age,
             'started_acting' => $this->start_year,
-            'record_created' => $this->created_at,
+            'record_created' => $this->created_at->format('d/m/Y'),
         ];
     }
 }

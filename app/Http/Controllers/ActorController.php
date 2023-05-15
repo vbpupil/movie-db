@@ -10,21 +10,33 @@ class ActorController extends Controller
 {
     public function index()
     {
-        return ActorResource::collection(Actor::all());
+        return response()->json(
+            [
+                'success' => true,
+                'data' => ActorResource::collection(Actor::all())
+            ]
+        );
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-
+        $data = $request->validate([
+            'name' => ['required', 'string'],
+            'age' => ['nullable', 'age'],
         ]);
 
-        return new ActorResource(Actor::create($request->validated()));
+
+        return new ActorResource(Actor::create($data));
     }
 
     public function show(Actor $actor)
     {
-        return new ActorResource($actor);
+        return response()->json(
+            [
+                'success' => true,
+                'data' => new ActorResource($actor)
+            ]
+        );
     }
 
     public function update(Request $request, Actor $actor)

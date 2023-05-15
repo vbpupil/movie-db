@@ -10,8 +10,8 @@ return new class extends Migration {
         Schema::create('actors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('age');
-            $table->integer('start_year');
+            $table->integer('age')->nullable();
+            $table->integer('start_year')->nullable();
 
             $table->timestamps();
         });

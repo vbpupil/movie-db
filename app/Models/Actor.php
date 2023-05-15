@@ -9,6 +9,8 @@ class Actor extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function movies()
     {
         return $this->hasMany(Actor::class);
