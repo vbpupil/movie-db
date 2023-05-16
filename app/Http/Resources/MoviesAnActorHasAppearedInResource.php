@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 /** @mixin \App\Models\Movie */
-class MovieResource extends JsonResource
+class MoviesAnActorHasAppearedInResource extends JsonResource
 {
     public function toArray(Request $request)
     {
@@ -15,8 +15,6 @@ class MovieResource extends JsonResource
             'title' => $this->title,
             'budget' => $this->budget,
             'status' => $this->status,
-            'actors' => ActorsInAMovieResource::collection($this->actors),
-            'record_created' => $this->created_at->format('Y-m-d'),
         ];
     }
 }

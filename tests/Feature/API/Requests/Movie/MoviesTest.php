@@ -6,7 +6,7 @@ use App\Models\Actor;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
-class ActorsTest extends TestCase
+class MoviesTest extends TestCase
 {
     public function test_you_can_retrieve_actors_from_the_api(): void
     {

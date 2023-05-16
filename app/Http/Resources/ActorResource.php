@@ -15,8 +15,9 @@ class ActorResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'age' => $this->age,
-            'started_acting' => $this->start_year,
-            'record_created' => $this->created_at->format('d/m/Y'),
+            'acting_debut' => $this->acting_debut,
+            'movies' => MoviesAnActorHasAppearedInResource::collection($this->movies),
+            'record_created' => $this->created_at->format('Y-m-d'),
         ];
     }
 }

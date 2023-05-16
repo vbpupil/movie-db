@@ -14,10 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::prefix('movies')->as('movies:')->group(
+Route::prefix('movies')->as('movies.')->group(
     base_path('routes/api/movies.php'),
 );
 
-Route::prefix('actors')->as('actors:')->group(
+Route::prefix('actors')->as('actors.')->group(
     base_path('routes/api/actors.php')
 );

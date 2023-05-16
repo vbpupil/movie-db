@@ -17,7 +17,7 @@ class ActorFactory extends Factory
         return [
             'name' => $this->faker->name,
             'age' => $age,
-            'start_year' => Carbon::now()->subDays(365 * ($age + rand(1, 20)))->format('Y'),
+            'acting_debut' => Carbon::now()->subDays(365 * ($age + rand(1, 20)))->format('Y'),
         ];
     }
 }

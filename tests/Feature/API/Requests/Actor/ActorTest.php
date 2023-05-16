@@ -13,7 +13,7 @@ class ActorTest extends TestCase
     {
         $actorA = Actor::factory()->create();
 
-        $this->get(Route('actors:show', ['actor'=>$actorA->id]))
+        $this->get(Route('actors.show', ['actor' => $actorA->id]))
             ->assertOk()
             ->assertJson(function (AssertableJson $json) use ($actorA) {
                 return $json
@@ -21,9 +21,8 @@ class ActorTest extends TestCase
                     ->where('data.id', $actorA->id)
                     ->where('data.name', $actorA->name)
                     ->where('data.age', $actorA->age)
-                    ->where('data.started_acting', intval($actorA->start_year))
-                    ->where('data.record_created', $actorA->created_at->format('d/m/Y'))
-                    ;
+                    ->where('data.acting_debut', intval($actorA->acting_debut))
+                    ->where('data.record_created', $actorA->created_at->format('Y-m-d'));
             });
     }
 
@@ -31,25 +30,21 @@ class ActorTest extends TestCase
     {
         $this->assertCount(0, Actor::all());
 
-        $this->post('actors:create', [
+        $actorData = [
             'name' => 'Marlon Brando',
             'age' => 53,
-            'started_acting' => 1965
-        ]);
+            'acting_debut' => 1965
+        ];
 
-        dd(Actor::all());
-
-//        $this->get(Route('actors:show', ['actor'=>$actorA->id]))
-//            ->assertOk()
-//            ->assertJson(function (AssertableJson $json) use ($actorA) {
-//                return $json
-//                    ->where('success', true)
-//                    ->where('data.id', $actorA->id)
-//                    ->where('data.name', $actorA->name)
-//                    ->where('data.age', $actorA->age)
-//                    ->where('data.started_acting', intval($actorA->start_year))
-//                    ->where('data.record_created', $actorA->created_at->format('d/m/Y'))
-//                    ;
-//            });
+        $this->post(route('actors.create'),$actorData)
+            ->assertOk()
+            ->assertJson(function (AssertableJson $json) use ($actorData) {
+                return $json
+                    ->where('success', true)
+                    ->where('data.name', $actorData['name'])
+                    ->where('data.age', $actorData['age'])
+                    ->where('data.acting_debut', $actorData['acting_debut'])
+                    ->etc();
+            });
     }
 }

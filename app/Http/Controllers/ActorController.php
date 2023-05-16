@@ -22,11 +22,16 @@ class ActorController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string'],
-            'age' => ['nullable', 'age'],
+            'age' => ['nullable', 'int'],
+            'acting_debut' => ['nullable', 'int'],
         ]);
 
-
-        return new ActorResource(Actor::create($data));
+        return response()->json(
+            [
+                'success' => true,
+                'data' => new ActorResource(Actor::create($data))
+            ]
+        );
     }
 
     public function show(Actor $actor)

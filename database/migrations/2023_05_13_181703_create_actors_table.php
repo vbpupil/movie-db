@@ -11,7 +11,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name');
             $table->integer('age')->nullable();
-            $table->integer('start_year')->nullable();
+            $table->integer('acting_debut')->nullable();
 
             $table->timestamps();
         });

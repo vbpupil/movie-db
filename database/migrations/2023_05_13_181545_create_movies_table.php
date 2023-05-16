@@ -10,7 +10,7 @@ return new class extends Migration {
         Schema::create('movies', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->integer('budget')->default('0');
+            $table->integer('budget')->nullable();
             $table->string('status')->nullable();
 
             $table->timestamps();
