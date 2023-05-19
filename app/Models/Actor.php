@@ -14,11 +14,11 @@ class Actor extends Model
 
     public function movies()
     {
-        return $this->belongsToMany(Movie::class, 'actors_movies');
+        return $this->belongsToMany(Movie::class, 'actors_movies')->orderByDesc('release_year');
     }
 
-//    public function character($movieId): Movie
-//    {
-//       return $this->movies->where('id', $id)->first(['id', 'title', ]);
-//    }
+    public function characters()
+    {
+        return $this->hasMany(Character::class);
+    }
 }

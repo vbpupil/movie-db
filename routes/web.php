@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Controllers\Import\ActorImportController;
+use App\Http\Controllers\Import\ImportController;
+use App\Http\Controllers\Import\LinkMoviesAndActorsController;
+use App\Http\Controllers\Import\MovieImportController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,3 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('import', [ImportController::class, 'index']);
+Route::get('import/actors', [ActorImportController::class, 'store']);
+Route::get('import/movies', [MovieImportController::class, 'store']);
+Route::get('import/link', [LinkMoviesAndActorsController::class, 'store']);

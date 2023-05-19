@@ -13,8 +13,8 @@ class MoviesAnActorHasAppearedInResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'budget' => $this->budget,
-            'status' => $this->status,
+            'genre' => $this->genre,
+            'release_year' => $this->release_year,
         ];
     }
 }

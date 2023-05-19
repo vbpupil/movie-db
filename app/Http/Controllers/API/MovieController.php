@@ -1,33 +1,29 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
-use App\Enum\MovieStatuses;
 use App\Http\Resources\MovieResource;
 use App\Models\Movie;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 
-class MovieController extends Controller
+class MovieController extends BaseAPIController
 {
     public function index()
     {
         return response()->json(
             [
                 'success' => true,
-                'data' => MovieResource::collection(Movie::all())
+                'data' => MovieResource::collection(Movie::paginate(self::PER_PAGE))
             ]
         );
     }
 
     public function store(Request $request)
     {
-        $statuses = collect(MovieStatuses::values());
-
         $data = $request->validate([
             'title' => ['required', 'string'],
-            'budget' => ['nullable', 'int'],
-//            'status' => ['sometimes', Rule::in($statuses->implode(','))],
+            'genre' => ['nullable', 'string'],
+            'release_year' => ['nullable', 'int'],
         ]);
 
         return response()->json(
@@ -40,7 +36,7 @@ class MovieController extends Controller
 
     public function show(Movie $movie)
     {
-        $movie->load('actors');
+        $movie->load(['actors','characters']);
 
         return response()->json(
             [

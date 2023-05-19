@@ -12,12 +12,10 @@ class ActorFactory extends Factory
 
     public function definition()
     {
-        $age = $this->faker->numberBetween(10, 90);
-
         return [
             'name' => $this->faker->name,
-            'age' => $age,
-            'acting_debut' => Carbon::now()->subDays(365 * ($age + rand(1, 20)))->format('Y'),
+            'born' => intval($this->faker->year),
+            'movie'=> $this->faker->word,
         ];
     }
 }

@@ -19,9 +19,8 @@ class MovieTest extends TestCase
                     ->where('success', true)
                     ->where('data.id', $actorA->id)
                     ->where('data.title', $actorA->title)
-                    ->where('data.budget', $actorA->budget)
-//                    ->where('data.status', $actorA->status)
-                    ->where('data.record_created', $actorA->created_at->format('Y-m-d'));
+                    ->where('data.genre', $actorA->genre)
+                    ->where('data.release_year', intval($actorA->release_year));
             });
     }
 
@@ -31,7 +30,8 @@ class MovieTest extends TestCase
 
         $movieData = [
             'title' => 'Sharknado',
-            'budget' => 50000,
+            'genre' => 'Action',
+            'release_year' => 2003
         ];
 
         $this->post(route('movies.create'),$movieData)
@@ -40,7 +40,8 @@ class MovieTest extends TestCase
                 return $json
                     ->where('success', true)
                     ->where('data.title', $movieData['title'])
-                    ->where('data.budget', $movieData['budget'])
+                    ->where('data.genre', $movieData['genre'])
+                    ->where('data.release_year', $movieData['release_year'])
                     ->etc();
             });
     }

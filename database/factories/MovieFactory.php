@@ -13,8 +13,8 @@ class MovieFactory extends Factory
     {
         return [
             'title' => $this->faker->name,
-            'budget' => $this->faker->numberBetween(5, 5000),
-            'status' => array_rand(['released', 'pre-release']),
+            'genre' => $this->faker->word,
+            'release_year' => $this->faker->year,
         ];
     }
 }

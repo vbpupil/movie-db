@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
 Route::prefix('movies')->as('movies.')->group(
     base_path('routes/api/movies.php'),
 );

@@ -11,7 +11,6 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('actor_id')->constrained()->cascadeOnDelete();
             $table->foreignId('movie_id')->constrained()->cascadeOnDelete();
-            $table->string('character');
 
             $table->timestamps();
         });

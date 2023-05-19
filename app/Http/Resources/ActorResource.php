@@ -14,10 +14,10 @@ class ActorResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'age' => $this->age,
-            'acting_debut' => $this->acting_debut,
+            'born' => $this->born,
             'movies' => MoviesAnActorHasAppearedInResource::collection($this->movies),
-            'record_created' => $this->created_at->format('Y-m-d'),
+            'characters' => CharacterResource::collection($this->characters),
+//            'record_created' => $this->created_at->format('Y-m-d'),
         ];
     }
 }

@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ActorResource;
 use App\Models\Actor;
 use Illuminate\Http\Request;
 
-class ActorController extends Controller
+class ActorController extends BaseAPIController
 {
     public function index()
     {
         return response()->json(
             [
                 'success' => true,
-                'data' => ActorResource::collection(Actor::all())
+                'data' => ActorResource::collection(Actor::orderBy('name')->paginate(self::PER_PAGE))
             ]
         );
     }
@@ -22,8 +23,7 @@ class ActorController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string'],
-            'age' => ['nullable', 'int'],
-            'acting_debut' => ['nullable', 'int'],
+            'born' => ['nullable', 'int'],
         ]);
 
         return response()->json(

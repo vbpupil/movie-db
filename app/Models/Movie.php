@@ -13,8 +13,11 @@ class Movie extends Model
 
     public function actors()
     {
-        return $this->belongsToMany(Actor::class, 'actors_movies');
+        return $this->belongsToMany(Actor::class, 'actors_movies')->orderBy('name');
     }
 
-
+    public function characters()
+    {
+        return $this->hasMany(Character::class);
+    }
 }

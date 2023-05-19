@@ -20,9 +20,7 @@ class ActorTest extends TestCase
                     ->where('success', true)
                     ->where('data.id', $actorA->id)
                     ->where('data.name', $actorA->name)
-                    ->where('data.age', $actorA->age)
-                    ->where('data.acting_debut', intval($actorA->acting_debut))
-                    ->where('data.record_created', $actorA->created_at->format('Y-m-d'));
+                    ->where('data.born', $actorA->born);
             });
     }
 
@@ -32,8 +30,7 @@ class ActorTest extends TestCase
 
         $actorData = [
             'name' => 'Marlon Brando',
-            'age' => 53,
-            'acting_debut' => 1965
+            'born' => 1949,
         ];
 
         $this->post(route('actors.create'),$actorData)
@@ -42,8 +39,7 @@ class ActorTest extends TestCase
                 return $json
                     ->where('success', true)
                     ->where('data.name', $actorData['name'])
-                    ->where('data.age', $actorData['age'])
-                    ->where('data.acting_debut', $actorData['acting_debut'])
+                    ->where('data.born', $actorData['born'])
                     ->etc();
             });
     }

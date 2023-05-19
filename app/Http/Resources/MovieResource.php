@@ -13,10 +13,11 @@ class MovieResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'budget' => $this->budget,
-            'status' => $this->status,
+            'genre' => $this->genre,
+            'release_year' => $this->release_year,
             'actors' => ActorsInAMovieResource::collection($this->actors),
-            'record_created' => $this->created_at->format('Y-m-d'),
+            'characters' => CharacterResource::collection($this->characters),
+//            'record_created' => $this->created_at->format('Y-m-d'),
         ];
     }
 }
