@@ -2,25 +2,57 @@
 
 namespace Tests\Feature\API\Requests\Movie;
 
+use App\Models\Actor;
+use App\Models\Character;
 use App\Models\Movie;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
 class MovieTest extends TestCase
 {
-    public function test_you_can_retrieve_an_actor_from_the_api(): void
+    public function test_you_can_retrieve_an_movie_from_the_api(): void
     {
-        $actorA = Movie::factory()->create();
+        $movieA = Movie::factory()->create();
 
-        $this->get(Route('movies.show', ['movie' => $actorA->id]))
+        $this->get(Route('movies.show', ['movie' => $movieA->id]))
             ->assertOk()
-            ->assertJson(function (AssertableJson $json) use ($actorA) {
+            ->assertJson(function (AssertableJson $json) use ($movieA) {
                 return $json
                     ->where('success', true)
-                    ->where('data.id', $actorA->id)
-                    ->where('data.title', $actorA->title)
-                    ->where('data.genre', $actorA->genre)
-                    ->where('data.release_year', intval($actorA->release_year));
+                    ->where('data.id', $movieA->id)
+                    ->where('data.title', $movieA->title)
+                    ->where('data.genre', $movieA->genre)
+                    ->where('data.release_year', intval($movieA->release_year));
+            });
+    }
+
+    public function test_a_movie_has_actors(): void
+    {
+        $movieA = Movie::factory()->has(
+            Actor::factory()->count(4), 'actors',
+        )->create();
+
+        $this->get(Route('movies.show', ['movie' => $movieA->id]))
+            ->assertOk()
+            ->assertJson(function (AssertableJson $json) use ($movieA) {
+                return $json->where('success', true)
+                    ->has('data.actors', 4);
+            });
+    }
+
+    public function test_a_movie_has_characters(): void
+    {
+        $movieA = Movie::factory()->create();
+        Actor::factory()->has(
+            Character::factory(['movie_id' => $movieA->id]), 'characters',
+        )->count(2)->create();
+
+        $this->get(Route('movies.show', ['movie' => $movieA->id]))
+            ->assertOk()
+            ->assertJson(function (AssertableJson $json) use ($movieA) {
+                return $json
+                    ->where('success', true)
+                    ->has('data.characters', 2);
             });
     }
 
@@ -34,7 +66,7 @@ class MovieTest extends TestCase
             'release_year' => 2003
         ];
 
-        $this->post(route('movies.create'),$movieData)
+        $this->post(route('movies.create'), $movieData)
             ->assertOk()
             ->assertJson(function (AssertableJson $json) use ($movieData) {
                 return $json

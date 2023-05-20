@@ -3,6 +3,8 @@
 namespace Tests\Feature\API\Requests\Actor;
 
 use App\Models\Actor;
+use App\Models\Character;
+use App\Models\Movie;
 use Illuminate\Support\Str;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
@@ -21,6 +23,38 @@ class ActorTest extends TestCase
                     ->where('data.id', $actorA->id)
                     ->where('data.name', $actorA->name)
                     ->where('data.born', $actorA->born);
+            });
+    }
+
+    public function test_an_actor_has_movies(): void
+    {
+        $actorA = Actor::factory()->has(
+            Movie::factory()->count(3), 'movies'
+        )->create();
+
+        $this->get(Route('actors.show', ['actor' => $actorA->id]))
+            ->assertOk()
+            ->assertJson(function (AssertableJson $json) use ($actorA) {
+                return $json
+                    ->where('success', true)
+                    ->has('data.movies', 3);
+            });
+    }
+
+    public function test_an_actor_has_characters(): void
+    {
+        $actorA = Actor::factory()->create();
+
+        Movie::factory()->has(
+            Character::factory(['actor_id' => $actorA->id]), 'characters'
+        )->count(3)->create();
+
+        $this->get(Route('actors.show', ['actor' => $actorA->id]))
+            ->assertOk()
+            ->assertJson(function (AssertableJson $json) use ($actorA) {
+                return $json
+                    ->where('success', true)
+                    ->has('data.characters', 3);
             });
     }
 
